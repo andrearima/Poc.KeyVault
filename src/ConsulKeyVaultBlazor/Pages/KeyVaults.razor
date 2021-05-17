@@ -1,0 +1,95 @@
+﻿@inject NavigationManager _navigationManager;
+@inject KeyVaultHttpService _keyServices;
+@page "/KeyVaults"
+
+<div class="row">
+    <div class="form-group col-6">
+        <label class="col-2">Filtrar:</label>
+        <RadzenTextBox class="col-9" @bind-Value="filtro" @oninput=@(args => Filtrar(args.Value.ToString())) />
+    </div>
+    <div class="form-group col-2">
+        <RadzenButton ButtonStyle="ButtonStyle.Light" Click="() => CarregarListas()">Recarregar</RadzenButton>
+    </div>
+    <div class="form-group col-2">
+        <RadzenButton ButtonStyle="ButtonStyle.Info" Click="() => Cadastrar()">Novo</RadzenButton>
+    </div>
+</div>
+
+<div class="row">
+    <RadzenTabs style="height: 880px">
+        <Tabs>
+            <RadzenTabsItem Text="Teste">
+                <RadzenDataList PageSize="9" WrapItems="true" AllowPaging="true" Data="@listaChavesTeste" TItem="Entity">
+                    <Template Context="itemsDaLista">
+                        <KeyVaultCard keyPairObject="itemsDaLista" />
+                    </Template>
+                </RadzenDataList>
+            </RadzenTabsItem>
+
+            <RadzenTabsItem Text="Desenvolvimento">
+                <RadzenDataList PageSize="9" WrapItems="true" AllowPaging="true" Data="@listaChavesDesenvolvimento" TItem="Entity">
+                    <Template Context="itemsDaLista">
+                        <KeyVaultCard keyPairObject="itemsDaLista" />
+                    </Template>
+                </RadzenDataList>
+            </RadzenTabsItem>
+
+            <RadzenTabsItem Text="Produção">
+                <RadzenDataList PageSize="9" WrapItems="true" AllowPaging="true" Data="@listaChavesProducao" TItem="Entity">
+                    <Template Context="itemsDaLista">
+                        <KeyVaultCard keyPairObject="itemsDaLista" />
+                    </Template>
+                </RadzenDataList>
+            </RadzenTabsItem>
+        </Tabs>
+    </RadzenTabs>
+</div>
+
+@code{
+    private IEnumerable<Entity> listaChaves = new List<Entity>();
+    private IEnumerable<Entity> listaChavesProducao;
+    private IEnumerable<Entity> listaChavesDesenvolvimento;
+    private IEnumerable<Entity> listaChavesTeste;
+    private string filtro;
+    protected override async Task OnInitializedAsync()
+    {
+        await CarregarListas();
+    }
+    private async Task CarregarListas()
+    {
+        filtro = "";
+        listaChaves = await _keyServices.GetAllKeys();
+        listaChavesProducao = listaChaves.Where(x => x.Ambiente.Equals(Ambiente.producao));
+        listaChavesDesenvolvimento = listaChaves.Where(x => x.Ambiente.Equals(Ambiente.desenvolvimento));
+        listaChavesTeste = listaChaves.Where(x => x.Ambiente.Equals(Ambiente.teste));
+    }
+
+    private async Task FiltrarListaPrincipal(string nomeChave)
+    {
+        listaChaves = listaChaves.Where(x => x.KeyName.Contains(nomeChave) || x.Produto.Contains(nomeChave) || x.Torre.Contains(nomeChave));
+        await AplicarFiltroNasSubListas();
+    }
+    private async Task AplicarFiltroNasSubListas()
+    {
+        listaChavesProducao = listaChaves.Where(x => x.Ambiente.Equals(Ambiente.producao));
+        listaChavesDesenvolvimento = listaChaves.Where(x => x.Ambiente.Equals(Ambiente.desenvolvimento));
+        listaChavesTeste = listaChaves.Where(x => x.Ambiente.Equals(Ambiente.teste));
+    }
+
+    private async Task Filtrar(string nomeChave)
+    {
+        if (string.IsNullOrWhiteSpace(nomeChave))
+        {
+            await CarregarListas();
+        }
+        else
+        {
+            await FiltrarListaPrincipal(nomeChave);
+        }
+    }
+
+    private async Task Cadastrar()
+    {
+        _navigationManager.NavigateTo("/KeyVaultNovo");
+    }
+}

@@ -1,0 +1,62 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "KeyVault", "KeyVault", "{56DE0FDB-F18C-4197-B4F1-B97555904043}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ServiceDiscover", "ServiceDiscover", "{3508D139-8968-4F46-A629-44EA0D1DC36B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{9ED6586F-5A0C-4361-A39A-882C79A91201}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{B65479D7-8BA4-4F7A-ABCA-61BA35461C65}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsulKeyVault", "src\ConsulKeyVault\ConsulKeyVault.csproj", "{0B0040FA-D790-499F-B6B8-E66BF9086236}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsulKeyVault.Console", "src\ConsulKeyVault.Console\ConsulKeyVault.Console.csproj", "{A89E90A9-D950-4D65-B0F2-BCDCCD72F9BB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{B8FBEFE7-4CD4-435C-A00A-06C34C3C2B39}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsulKeyVault.Test", "tests\ConsulKeyVault.Test\ConsulKeyVault.Test.csproj", "{60DA8F2D-E2C4-45BC-92BB-FAA18994B5EA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsulKeyVaultBlazor", "src\ConsulKeyVaultBlazor\ConsulKeyVaultBlazor.csproj", "{4730AD99-9624-4EC6-8566-1EB647750BBC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0B0040FA-D790-499F-B6B8-E66BF9086236}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B0040FA-D790-499F-B6B8-E66BF9086236}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B0040FA-D790-499F-B6B8-E66BF9086236}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B0040FA-D790-499F-B6B8-E66BF9086236}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A89E90A9-D950-4D65-B0F2-BCDCCD72F9BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A89E90A9-D950-4D65-B0F2-BCDCCD72F9BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A89E90A9-D950-4D65-B0F2-BCDCCD72F9BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A89E90A9-D950-4D65-B0F2-BCDCCD72F9BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60DA8F2D-E2C4-45BC-92BB-FAA18994B5EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60DA8F2D-E2C4-45BC-92BB-FAA18994B5EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60DA8F2D-E2C4-45BC-92BB-FAA18994B5EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60DA8F2D-E2C4-45BC-92BB-FAA18994B5EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4730AD99-9624-4EC6-8566-1EB647750BBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4730AD99-9624-4EC6-8566-1EB647750BBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4730AD99-9624-4EC6-8566-1EB647750BBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4730AD99-9624-4EC6-8566-1EB647750BBC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{56DE0FDB-F18C-4197-B4F1-B97555904043} = {9ED6586F-5A0C-4361-A39A-882C79A91201}
+		{3508D139-8968-4F46-A629-44EA0D1DC36B} = {9ED6586F-5A0C-4361-A39A-882C79A91201}
+		{0B0040FA-D790-499F-B6B8-E66BF9086236} = {56DE0FDB-F18C-4197-B4F1-B97555904043}
+		{A89E90A9-D950-4D65-B0F2-BCDCCD72F9BB} = {56DE0FDB-F18C-4197-B4F1-B97555904043}
+		{B8FBEFE7-4CD4-435C-A00A-06C34C3C2B39} = {56DE0FDB-F18C-4197-B4F1-B97555904043}
+		{60DA8F2D-E2C4-45BC-92BB-FAA18994B5EA} = {B8FBEFE7-4CD4-435C-A00A-06C34C3C2B39}
+		{4730AD99-9624-4EC6-8566-1EB647750BBC} = {B65479D7-8BA4-4F7A-ABCA-61BA35461C65}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C7028EC6-10E8-4BDC-BC4F-CDBF281ACA47}
+	EndGlobalSection
+EndGlobal

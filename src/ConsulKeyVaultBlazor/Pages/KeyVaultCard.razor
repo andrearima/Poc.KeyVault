@@ -1,0 +1,49 @@
+﻿<div class="card" style="width:300px;">
+    <i class="card-header">
+        @keyPairObject.Produto - <b>@keyPairObject.KeyName</b>
+    </i>
+    <div class="card-body row">
+        <div class="col-6">
+            <label>Nome:</label>
+            <b>@keyPairObject.KeyName</b>
+            <div style="margin-top:5px">Ambiente:</div>
+            <b>@(keyPairObject.Ambiente)</b>
+            <br />
+            <RadzenImage Path="@keyPairObject.KeyName" Style="width:100px;" />
+        </div>
+        <div class="col-6">
+            <div>KeyName:</div>
+            <b>@String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", keyPairObject.KeyName)</b>
+            <div style="margin-top:5px">Produto:</div>
+            <b>@(keyPairObject.Produto)</b>
+            <div style="margin-top:5px">Ambiente:</div>
+            <b>@(keyPairObject.Ambiente)</b>
+        </div>
+    </div>
+</div>
+@*<RadzenCard Style="width:400px;">
+        <div class="row">
+            <div class="col-6">
+                <div>Nome:</div>
+                <b>@keyPairObject.KeyName</b>
+                <div style="margin-top:5px">Ambiente:</div>
+                <b>@(keyPairObject.Ambiente)</b>
+                <br />
+                <RadzenImage Path="@keyPairObject.KeyName" Style="width:100px;" />
+            </div>
+            <div class="col-6">
+                <div>KeyName:</div>
+                <b>@String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", keyPairObject.KeyName)</b>
+                <div style="margin-top:5px">Produto:</div>
+                <b>@(keyPairObject.Produto)</b>
+                <div style="margin-top:5px">Ambiente:</div>
+                <b>@(keyPairObject.Ambiente)</b>
+            </div>
+        </div>
+
+    </RadzenCard>*@
+
+@code {
+    [Parameter]
+    public Entity keyPairObject { get; set; }
+}
