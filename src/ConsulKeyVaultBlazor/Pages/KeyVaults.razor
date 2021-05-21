@@ -2,59 +2,82 @@
 @inject KeyVaultHttpService _keyServices;
 @page "/KeyVaults"
 
-<div class="row">
-    <div class="form-group col-6">
-        <label class="col-2">Filtrar:</label>
-        <RadzenTextBox class="col-9" @bind-Value="filtro" @oninput=@(args => Filtrar(args.Value.ToString())) />
+@if (NovoOuEdicao)
+{
+    <KeyVaultNovo @ref="keyvaultNovo" entidade="EntidadeDeEdicaoOuCriacao" EditarCadastrar="NovoOuEdicao"></KeyVaultNovo>
+}
+else
+{
+    <div class="row">
+        <div class="form-group col-6">
+            <label class="col-2">Filtrar:</label>
+            <RadzenTextBox class="col-9" @bind-Value="filtro" @oninput=@(args => Filtrar(args.Value.ToString())) />
+        </div>
+        <div class="form-group col-2">
+            <RadzenButton ButtonStyle="ButtonStyle.Light" Click="() => CarregarListas()">Recarregar</RadzenButton>
+        </div>
+        <div class="form-group col-2">
+            <RadzenButton ButtonStyle="ButtonStyle.Info" Click="() => Cadastrar()">Novo</RadzenButton>
+        </div>
     </div>
-    <div class="form-group col-2">
-        <RadzenButton ButtonStyle="ButtonStyle.Light" Click="() => CarregarListas()">Recarregar</RadzenButton>
+
+    <div class="row">
+        <RadzenTabs style="max-height: 880px">
+            <Tabs>
+                <RadzenTabsItem Text="Teste">
+                    <RadzenDataList PageSize="10" WrapItems="true" AllowPaging="true" Data="@listaChavesTeste" TItem="Entity">
+                        <Template Context="itemsDaLista">
+                            <KeyVaultCard keyPairObject="itemsDaLista" />
+                        </Template>
+                    </RadzenDataList>
+                </RadzenTabsItem>
+
+                <RadzenTabsItem Text="Desenvolvimento">
+                    <RadzenDataList PageSize="10" WrapItems="true" AllowPaging="true" Data="@listaChavesDesenvolvimento" TItem="Entity">
+                        <Template Context="itemsDaLista">
+                            <KeyVaultCard keyPairObject="itemsDaLista" />
+                        </Template>
+                    </RadzenDataList>
+                </RadzenTabsItem>
+
+                <RadzenTabsItem Text="Produção">
+                    <RadzenDataList PageSize="10" WrapItems="true" AllowPaging="true" Data="@listaChavesProducao" TItem="Entity">
+                        <Template Context="itemsDaLista">
+                            <KeyVaultCard keyPairObject="itemsDaLista" />
+                        </Template>
+                    </RadzenDataList>
+                </RadzenTabsItem>
+            </Tabs>
+        </RadzenTabs>
     </div>
-    <div class="form-group col-2">
-        <RadzenButton ButtonStyle="ButtonStyle.Info" Click="() => Cadastrar()">Novo</RadzenButton>
-    </div>
-</div>
+}
 
-<div class="row">
-    <RadzenTabs style="height: 880px">
-        <Tabs>
-            <RadzenTabsItem Text="Teste">
-                <RadzenDataList PageSize="9" WrapItems="true" AllowPaging="true" Data="@listaChavesTeste" TItem="Entity">
-                    <Template Context="itemsDaLista">
-                        <KeyVaultCard keyPairObject="itemsDaLista" />
-                    </Template>
-                </RadzenDataList>
-            </RadzenTabsItem>
 
-            <RadzenTabsItem Text="Desenvolvimento">
-                <RadzenDataList PageSize="9" WrapItems="true" AllowPaging="true" Data="@listaChavesDesenvolvimento" TItem="Entity">
-                    <Template Context="itemsDaLista">
-                        <KeyVaultCard keyPairObject="itemsDaLista" />
-                    </Template>
-                </RadzenDataList>
-            </RadzenTabsItem>
-
-            <RadzenTabsItem Text="Produção">
-                <RadzenDataList PageSize="9" WrapItems="true" AllowPaging="true" Data="@listaChavesProducao" TItem="Entity">
-                    <Template Context="itemsDaLista">
-                        <KeyVaultCard keyPairObject="itemsDaLista" />
-                    </Template>
-                </RadzenDataList>
-            </RadzenTabsItem>
-        </Tabs>
-    </RadzenTabs>
-</div>
 
 @code{
+
     private IEnumerable<Entity> listaChaves = new List<Entity>();
     private IEnumerable<Entity> listaChavesProducao;
     private IEnumerable<Entity> listaChavesDesenvolvimento;
     private IEnumerable<Entity> listaChavesTeste;
+
+    private bool NovoOuEdicao = false;
+    private Entity EntidadeDeEdicaoOuCriacao;
+    private KeyVaultNovo keyvaultNovo;
+
+
     private string filtro;
     protected override async Task OnInitializedAsync()
     {
         await CarregarListas();
+        InicializarObjetoParaCriacao();
     }
+    private void InicializarObjetoParaCriacao()
+    {
+        EntidadeDeEdicaoOuCriacao = new Entity("Nome da Chave", Ambiente.teste, "nome do produto", "nome da torre");
+        NovoOuEdicao = true;
+    }
+
     private async Task CarregarListas()
     {
         filtro = "";

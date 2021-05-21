@@ -1,49 +1,60 @@
-﻿<div class="card" style="width:300px;">
+﻿@inject IJSRuntime JSRuntime
+@inject DialogService DialogService
+@inject ClipboardService ClipboardService
+@inject NotificationService NotificationService
+
+<div class="card" style="max-width: 270px;width: 270px;">
     <i class="card-header">
         @keyPairObject.Produto - <b>@keyPairObject.KeyName</b>
     </i>
     <div class="card-body row">
-        <div class="col-6">
-            <label>Nome:</label>
-            <b>@keyPairObject.KeyName</b>
-            <div style="margin-top:5px">Ambiente:</div>
-            <b>@(keyPairObject.Ambiente)</b>
-            <br />
-            <RadzenImage Path="@keyPairObject.KeyName" Style="width:100px;" />
+        <div class="col-12">
+            <div class="form-group">
+                <label>Nome:</label>
+                <b>@keyPairObject.KeyName</b>
+            </div>
+            <div class="form-group">
+                <label>Ambiente:</label>
+                <b>@(keyPairObject.Ambiente)</b>
+            </div>
+            <div class="form-group">
+                <label>Produto:</label>
+                <b>@(keyPairObject.Produto)</b>
+            </div>
         </div>
-        <div class="col-6">
-            <div>KeyName:</div>
-            <b>@String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", keyPairObject.KeyName)</b>
-            <div style="margin-top:5px">Produto:</div>
-            <b>@(keyPairObject.Produto)</b>
-            <div style="margin-top:5px">Ambiente:</div>
-            <b>@(keyPairObject.Ambiente)</b>
+        <div class="col-4">
+            <RadzenButton ButtonStyle="ButtonStyle.Info" Icon="content_copy" Style="width:100%" Click=@CopyTextToClipboard data-toggle="tooltip" data-placement="top" title="clique para copiar"/>
+        </div>
+        <div class="col-4">
+            <RadzenButton ButtonStyle="ButtonStyle.Warning" Icon="edit" Style="width:100%" Click=@CopyTextToClipboard data-toggle="tooltip" data-placement="top" title="ir para edição da chave"/>
+        </div>
+        <div class="col-4">
+            <RadzenButton ButtonStyle="ButtonStyle.Light" Icon="info" Style="width:100%" Click=@ShowInlineDialog data-toggle="tooltip" data-placement="top" title="clique para ver o valor da chave"/>
         </div>
     </div>
-</div>
-@*<RadzenCard Style="width:400px;">
-        <div class="row">
-            <div class="col-6">
-                <div>Nome:</div>
-                <b>@keyPairObject.KeyName</b>
-                <div style="margin-top:5px">Ambiente:</div>
-                <b>@(keyPairObject.Ambiente)</b>
-                <br />
-                <RadzenImage Path="@keyPairObject.KeyName" Style="width:100px;" />
-            </div>
-            <div class="col-6">
-                <div>KeyName:</div>
-                <b>@String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", keyPairObject.KeyName)</b>
-                <div style="margin-top:5px">Produto:</div>
-                <b>@(keyPairObject.Produto)</b>
-                <div style="margin-top:5px">Ambiente:</div>
-                <b>@(keyPairObject.Ambiente)</b>
-            </div>
-        </div>
 
-    </RadzenCard>*@
+</div>
+
+
 
 @code {
     [Parameter]
     public Entity keyPairObject { get; set; }
+    async Task ShowInlineDialog()
+    {
+        var result = await DialogService.OpenAsync(keyPairObject.KeyName, ds =>
+                @<div>
+                    @keyPairObject.GetKeyPairValue()<br /><br />
+
+                    <button class="btn btn-block btn-outline-dark" @onclick="CopyTextToClipboard" data-toggle="tooltip" data-placement="top" title="clique para copiar" >
+                        Copiar</button>
+                </div>);
+
+    }
+
+    private async Task CopyTextToClipboard()
+    {
+        await ClipboardService.WriteTextAsync(@keyPairObject.GetKeyPairValue());
+        NotificationService.Notify(NotificationSeverity.Info, "Texto copiado");
+    }
 }

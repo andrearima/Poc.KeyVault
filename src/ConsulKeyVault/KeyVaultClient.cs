@@ -6,11 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Consul;
 
-namespace KeyVault
+namespace ConsulKeyVault
 {
     public class KeyVaultClient : IDisposable
     {
         private readonly ConsulClient _client;
+        private readonly string TokenAdmin = "527351b7-1239-1301-2576-b80a668391be";
         public KeyVaultClient()
         {
             _client = new ConsulClient();
@@ -18,12 +19,18 @@ namespace KeyVault
         public KeyVaultClient(string url)
         {
             _client = new ConsulClient();
+            SetToken();
             SetUrlAddress(url);
         }
         public KeyVaultClient(Uri url)
         {
             _client = new ConsulClient();
+            SetToken();
             SetUrlAddress(url);
+        }
+        private void SetToken()
+        {
+            _client.Config.Token = TokenAdmin;
         }
         public void SetUrlAddress(string url)
         {

@@ -1,8 +1,10 @@
-using KeyVault;
+using ConsulKeyVault;
+using ConsulKeyVaultBlazor.Services;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Radzen;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -28,6 +30,9 @@ namespace ConsulKeyVaultBlazor
             //});
 
             builder.Services.AddScoped<KeyVaultHttpService>();
+            builder.Services.AddScoped<DialogService>();
+            builder.Services.AddScoped<ClipboardService>();
+            builder.Services.AddScoped<NotificationService>();
 
             await builder.Build().RunAsync();
         }

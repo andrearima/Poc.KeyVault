@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KeyVault
+namespace ConsulKeyVault
 {
     public class Entity
     {
